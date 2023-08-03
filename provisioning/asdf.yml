@@ -34,7 +34,7 @@
         become_user: vagrant
         ansible.builtin.shell: |
           source /home/vagrant/.bashrc
-          /home/vagrant/.asdf/bin/asdf install java temurin-17.0.6+10
-          /home/vagrant/.asdf/bin/asdf global java temurin-17.0.6+10
+          /home/vagrant/.asdf/bin/asdf install java temurin-17.0.8+7
+          /home/vagrant/.asdf/bin/asdf global java temurin-17.0.8+7
         args:
           executable: /bin/bash
