@@ -21,13 +21,13 @@ $ cd /path/to/devops-interview/vagrant
 $ vagrant up
 ```
 
-This will take some time to download the base box of the VM and provision the image. Depending on the speed of your machine and your internet connection, this will take a few minutes.
+This will download the base box of the VM and provision the image. Depending on the speed of your machine and your internet connection, this will take a few minutes.
 
 After the VM has been started, the command `vagrant ssh` can be used to connect to the VM using secure shell (SSH).
 
 > The VM is set to have a default of 2 vCPUs and 4096 MiB of RAM. These values should be fine for most users, but if you wish they can be changed by setting the `VAGRANT_CPU` and `VAGRANT_MEM` environment variables, i.e. `export VAGRANT_CPU=4` and `export VAGRANT_MEM=8192` before executing `vagrant up`.
 
-If at any point you are experiencing problems with your Vagrant environment, you can always re-create your VM with the following two commands:
+If at any point you are experiencing problems with your Vagrant environment, you can always delete and re-create your VM with the following two commands:
 
 ```shell
 $ vagrant destroy -f
@@ -36,7 +36,7 @@ $ vagrant up
 
 ## Assignments
 
-### Building and containerising a Spring Boot application
+### Task 1: Building and containerising a Spring Boot application
 
 In the `helloworld` directory you will find a simple [Spring Boot](https://spring.io/projects/spring-boot) application that spins up a web server that prints `Hello World` when visited. In order to run the code inside a container, the code needs to be built with [Gradle](https://gradle.org/) first. If you are not familiar with Gradle, you can use the Gradle Wrapper with command `./gradlew clean build` to generate an executable `.jar` file that can be used within the container. After building, this file will be located in the `helloworld` directory under `build/libs/helloworld.jar`.
 
@@ -61,11 +61,19 @@ Your task is now to create a `Dockerfile` container that we will be using in the
 
 ![](flow.png)
 
-### Building and deploying a containerised application with Ansible
+### Task 2: Build and run Ansible playbooks
 
-The next step is to deploy the containerised application in the Vagrant host on the Docker runtime. The Docker service is not available yet on the Vagrant host, so the first step is to install the Docker service with [Ansible](https://www.ansible.com/). Check this relevant [Docker documentation page](https://docs.docker.com/engine/install/ubuntu/) for directions on how to install Docker on an Ubuntu host and translate these actions into an Ansible playbook. If you are unfamiliar with Ansible playbooks, have a look at the [getting started document on ansible.com](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html). After installation, make sure the `systemd` `docker` service is started and will start everytime the Vagrant host is rebooted. Ansible is already pre-installed on the Vagrant machine. Save this playbook under `docker-playbook.yml` in the main directory.
+The next task is to create a few [Ansible](https://www.ansible.com/) playbooks to execute some tasks in the Vagrant VM. If you are unfamiliar with Ansible playbooks, have a look at the [getting started document on ansible.com](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html). Once you have created a playbook, you can easily run it in the Vagrant VM with the following command:
 
-Once the Docker service is started, create a second Ansible playbook to build the `Dockerfile` of the `helloworld.jar` application you have created in the previous step, and to run it on the Vagrant machine. Save this playbook under `helloworld-playbook.yml` in the main directory.
+```shell
+ansible-playbook -c local -i localhost, your-playbook.yml
+```
+
+Ansible is already pre-installed on the Vagrant VM, so you can use the command directly. If your playbook needs to run privileged actions, make sure to run the command as the `root` user, or use `sudo`.
+
+Your first playbook should install Docker in the Vagrant VM. Check the [Docker documentation page](https://docs.docker.com/engine/install/ubuntu/) for instructions on how to install Docker on an Ubuntu host and translate these actions into an Ansible playbook. Make sure that the Docker software is installed, and that the `systemd` `docker` service will start automatically every time the Vagrant host is rebooted. Save this playbook as `docker-playbook.yml` in the main directory.
+
+Once the Docker service is installed, your next task is to create an Ansible playbook to build the `Dockerfile` of the `helloworld.jar` application you have created in the previous step, and to run it on the Vagrant machine. Save this playbook under `helloworld-playbook.yml` in the main directory.
 
 Finally, create one last playbook to modify some operating system settings. Create the following **system-wide** aliases for convenience, **for all users**:
 
@@ -74,19 +82,17 @@ Finally, create one last playbook to modify some operating system settings. Crea
 | `d`   | `docker`         |
 | `dc`  | `docker compose` |
 
-Additionally, in the same playbook, create file named `topsecret.txt` in the `/etc` directory containing the message `t0ps3cr3t` in such a way that only the `root` user can read the file.
+Additionally, in the same playbook, create file named `topsecret.txt` in the `/etc` directory containing the message `t0ps3cr3t` in such a way that only the `root` user can read the file. Save this playbook under `os-playbook.yml` in the main directory.
 
-Save this playbook under `os-playbook.yml` in the main directory.
+### Task 3: Writing a script
 
-### Writing a script
-
-The Sunrise Sunset website at [https://sunrise-sunset.org/api](https://sunrise-sunset.org/api) provides a REST API to retrieve sunrise and sunset times for a specific location using coordinates. We would like to have a script that shows when we need to turn the lights in the office on or off. Our office is located in the Netherlands (in the Central European time zone), at the following latitude and longitude:
+The Sunrise Sunset website at [https://sunrise-sunset.org/api](https://sunrise-sunset.org/api) provides a REST API to retrieve sunrise and sunset times for a specific location using coordinates. We would like to have a script that shows when we need to turn the lights in the office on or off. Our office is located in the Netherlands (in the CET or CEST time zone), at the following latitude and longitude:
 
 | Latitude  | Longitude |
 |-----------|-----------|
 | 50.930581 | 5.780691  |
 
-The office lights should be on between sunset and sunrise, and off between sunrise and sunset. Use information returned from the API call to determine whether the lights should be on or off at the time of script execution. Your script should return nothing more or less than the word `ON` or `OFF`. Make sure to test edge cases, i.e. around the sunrise and sunset times, and around midnight. To accomplish this task, the choice of programming language and/or framework is yours. If you installed additional tools to build and test your script, please show this in your solution too.
+The office lights should be on between sunset and sunrise, and off between sunrise and sunset. Use information returned from the API call to determine whether the lights should be on or off at the time of script execution. Your script should return nothing more or less than the word `ON` or `OFF`. Make sure to test edge cases, i.e. around the sunrise and sunset times, and around midnight. To accomplish this task, the choice of programming language and/or framework is yours. If you installed additional tools to build and test your script, please show how you did this in your solution too.
 
 > Tip: The Vagrant image contains an installation of [asdf](https://asdf-vm.com/). You are free to use this to install any tools you need to build the script.
 
