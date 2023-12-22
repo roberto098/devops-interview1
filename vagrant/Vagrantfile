@@ -14,7 +14,7 @@ end
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ilionx/ubuntu2204"
-  config.vm.box_version = "1.3.1-20230619"
+  config.vm.box_version = "1.4.0-20231218"
   config.vm.box_check_update = false
   config.vm.hostname = "devops-interview"
   config.vm.boot_timeout = 360
