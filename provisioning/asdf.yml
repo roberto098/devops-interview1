@@ -6,7 +6,7 @@
         ansible.builtin.git:
           repo: 'https://github.com/asdf-vm/asdf.git'
           dest: "/home/vagrant/.asdf"
-          version: "v0.11.3"
+          version: "v0.14.0"
 
       - name: Add ASDF to .bashrc
         become_user: vagrant
@@ -34,7 +34,7 @@
         become_user: vagrant
         ansible.builtin.shell: |
           source /home/vagrant/.bashrc
-          /home/vagrant/.asdf/bin/asdf install java temurin-17.0.8+7
-          /home/vagrant/.asdf/bin/asdf global java temurin-17.0.8+7
+          /home/vagrant/.asdf/bin/asdf install java temurin-21.0.2+13.0.LTS
+          /home/vagrant/.asdf/bin/asdf global java temurin-21.0.2+13.0.LTS
         args:
           executable: /bin/bash
