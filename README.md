@@ -12,7 +12,7 @@ The environment uses [Vagrant](https://www.vagrantup.com/) to create a reproduci
 
 If you prefer, you can also use the package manager of your operating system to install both Vagrant and VirtualBox. Please make sure you have version 2.3.x of Vagrant, and version 7.0.x of VirtualBox for the environment to work.
 
-> Important note for arm64 Mac users: currently, VirtualBox does not work on arm64 Macs. This means you cannot use the pre-configured virtual machine to do the assessment. You can still do the assessment on your Mac, but you will need to install the software needed to do the assessment yourself. You will need [version 17 of Java Temurin](https://adoptium.net/installation/), [Docker](https://docs.docker.com/engine/install/), [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html), and a scripting language of your choice for the third assignment.
+> Important note for arm64 Mac users: currently, VirtualBox does not work on arm64 Macs. This means you cannot use the pre-configured virtual machine to do the assessment. You can still do the assessment on your Mac, but you will need to install the software needed to do the assessment yourself. You will need [version 21 of Java Temurin](https://adoptium.net/installation/), [Docker](https://docs.docker.com/engine/install/), [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html), and a scripting language of your choice for the third assignment.
 
 Open a terminal in the directory containing your clone, move to the `vagrant` directory inside it, and start the Vagrant VM:
 
@@ -92,12 +92,12 @@ The Sunrise Sunset website at [https://sunrise-sunset.org/api](https://sunrise-s
 |-----------|-----------|
 | 50.930581 | 5.780691  |
 
-The office lights should be on between sunset and sunrise, and off between sunrise and sunset. Use information returned from the API call to determine whether the lights should be on or off at the time of script execution. Your script should return nothing more or less than the word `ON` or `OFF`. Make sure to test edge cases, i.e. around the sunrise and sunset times, and around midnight. To accomplish this task, the choice of programming language and/or framework is yours. If you installed additional tools to build and test your script, please show how you did this in your solution too.
+The office lights should be on between sunset and sunrise, and off between sunrise and sunset. Use information returned from the API call to determine whether the lights should be on or off at the time of script execution. Your script should return nothing more or less than the word `ON` or `OFF`. Make sure to test edge cases, i.e. around the sunrise and sunset times, with and without daylight savings, and around midnight. To accomplish this task, the choice of programming language and/or framework is yours. If you installed additional tools to build and test your script, please show how you did this in your solution too.
 
 > Tip: The Vagrant image contains an installation of [asdf](https://asdf-vm.com/). You are free to use this to install any tools you need to build the script.
 
 ## Notes
 
-Please note that this document is merely a guideline for these assignments. If you are comfortable with another language or tool feel free to use this, as long as you reach the same end result. Please show this in your solution if you do.
+Please note that this document is merely a guideline for these assignments. If you are comfortable with another language or tool, feel free to use this, as long as you reach the same end result. Please show this in your solution if you do.
 
 When you are finished with the assignments, please send the link to your public GitHub repository that contains your solution to your contact at [ilionx](https://www.ilionx.com/).
