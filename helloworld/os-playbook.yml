@@ -1,0 +1,28 @@
+---
+- name: Configure OS settings
+  hosts: localhost
+  become: yes
+
+  tasks: 
+#Alias voor Docker-commando's te maken 
+    - name: Create aliases for Docker commands
+      lineinfile:
+        path: /etc/profile
+        line: "alias d='docker'"
+        create: yes
+#Alias voor Docker compose te maken
+    - name: Create aliases for Docker Compose commands
+      lineinfile:
+        path: /etc/profile
+        line: "alias dc='docker-compose'"
+        create: yes
+#txt bestand aanmaken met beperkte machtigingen
+    - name: Create topsecret.txt file with restricted permissions
+      file:
+        path: /etc/topsecret.txt
+        state: touch
+        mode: 0600
+      become_user: root
+      become_method: sudo
+      become: yes
+

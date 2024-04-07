@@ -1,0 +1,13 @@
+---
+- name: Build and run helloworld Docker container
+  hosts: localhost
+  become: yes
+
+  tasks:
+#taak 1 build van docker image
+    - name: Build Docker image for helloworld.jar
+      command: docker build -t my-spring-boot-app /projects/helloworld
+#taak 2 voer Docker-Container uit 
+    - name: Run Docker container
+      command: docker run -d -p 8081:8080 my-spring-boot-app
+
